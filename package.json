@@ -1,0 +1,26 @@
+{
+  "name": "hal-crawler",
+  "version": "0.1.0",
+  "description": "Hal Client for JavaScript",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "babel src -d lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StuckiSimon/HalCrawler.git"
+  },
+  "keywords": [
+    "hal"
+  ],
+  "author": "Simon Stucki",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/StuckiSimon/HalCrawler/issues"
+  },
+  "homepage": "https://github.com/StuckiSimon/HalCrawler#readme",
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-preset-env": "^1.1.8"
+  }
+}
