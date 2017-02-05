@@ -2,16 +2,25 @@
  * A Resource represents an instance of a Schema definition.
  */
 export default class Resource {
-  constructor(schema, data) {
+  constructor(schema, link, data) {
     this.schema = schema;
-    this.date = data;
+    this.link = link;
+    this.data = data;
   }
 
   getSchema() {
     return this.schema;
   }
 
+  getLink() {
+    return this.link;
+  }
+
   getData() {
     return this.data;
+  }
+
+  isFetched() {
+    return this.data === undefined;
   }
 }

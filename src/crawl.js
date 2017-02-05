@@ -1,9 +1,8 @@
-import "whatwg-fetch";
-import Resource from "./Resource";
-
-const load = (url) => {
-  return fetch(url).then(response => new Resource(schema, response.json()));
-};
+import load from "./utils/load";
+import constants from "./constants";
+import action from "./action";
+import convertToStore from "./utils/convertToStore";
+import getResourceFromStore from "./utils/getResourceFromStore";
 
 /**
  * fetches a HAL resource
@@ -11,27 +10,25 @@ const load = (url) => {
  * @param  stores  [current store instance or {}]
  * @param  resource [root resource]
  * @param  command [defines what to execute]
- * @return stores with new resources
+ * @return store with new resources
  */
-export default function crawl(config, stores, schema, command) {
+export default function crawl(config, store, schema, command) {
   const resource = command.getResource();
-  const action = command.getAction();
+  const desiredAction = command.getAction();
 
-  // root resource
-  if (resource === undefined && action === undefined) {
-    return load(config.get("root"));
+  // for first call to a HAL API there is no resource instance
+  if (resource === undefined) {
+    return load(config.get(constants.config.root)).then(response => response.json().then(data => convertToStore(schema, data, store)));
   } else {
-    // find first store which contains a schema
-    // TODO: the same schema might be in different stores
-    const storeLocation = stores.find(store => {
-      return store[schema.getName()] !== undefined;
-    });
-
-    if (storeLocation === undefined) {
-      // no element of this type has already been loaded
-
+    if (desiredAction === action.GET) {
+      const resourceInStore = getResourceFromStore(store, schema, resource);
+      if (resourceInStore === undefined) {
+        return load(resource.getLink()).then(response => response.json().then(data => convertToStore(schema, data, store)));
+      } else {
+        return Promise.resolve(resourceInStore);
+      }
     } else {
-      // the element could be here
+      console.warn(action + " action is not supported yet");
     }
   }
 }
