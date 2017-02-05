@@ -2,9 +2,14 @@ import Immutable from "immutable";
 
 /**
  * creates and validates a configuration object
- * @param  config object which contains http headers e.g.: {"Accept-Language": "en-US"}
+ * @param  config object which must contain root url and might contain other config such as http headers e.g.: {root: "localhost:8080/api", headers: {"Accept-Language": "en-US"}}
  * @return configuration instance
  */
 export default function createConfig(config) {
-  return Immutable.Map({});
+  if (config === undefined) {
+    throw "config must be an object";
+  } else if (config.root === undefined || typeof config.root !== "string") {
+    throw "config.root must be a valid url";
+  }
+  return Immutable.Map(config);
 }

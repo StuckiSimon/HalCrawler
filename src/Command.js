@@ -6,4 +6,12 @@ export default class Command {
     this.resource = resource;
     this.action = action;
   }
+
+  getResource() {
+    return this.resource;
+  }
+
+  getAction() {
+    return this.action;
+  }
 }

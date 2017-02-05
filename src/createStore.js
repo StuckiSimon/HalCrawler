@@ -6,5 +6,5 @@ import Immutable from "immutable";
  * @return combined store
  */
 export default function createStore(...stores) {
-  return Immutable.Map({});
+  return Immutable.List(stores);
 }
