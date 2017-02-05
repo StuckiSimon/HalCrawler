@@ -15,7 +15,7 @@ export default class Schema {
     this.name = name;
     this.identifiers = identifiers;
     this.action = action;
-    this.children = children;
+    this.children = children || [];
   }
 
   getName() {
