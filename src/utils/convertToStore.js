@@ -3,7 +3,8 @@ import constants from "../constants";
 import Resource from "../Resource";
 const createLinkData = (link) => {
   const newData = {};
-  newData[constants.resource.links] = link;
+  newData[constants.resource.links] = {};
+  newData[constants.resource.links][constants.resource.self] = link;
   return newData;
 };
 const convertToStore = (schema, data, store) => {

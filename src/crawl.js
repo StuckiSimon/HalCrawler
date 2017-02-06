@@ -23,7 +23,7 @@ export default function crawl(config, store, schema, command) {
     if (desiredAction === action.GET) {
       const resourceInStore = getResourceFromStore(store, schema, resource);
       if (resourceInStore === undefined) {
-        return load(resource.getLink()).then(response => response.json().then(data => convertToStore(schema, data, store)));
+        return load(resource.getLink().href).then(response => response.json().then(data => convertToStore(schema, data, store)));
       } else {
         return Promise.resolve(resourceInStore);
       }
