@@ -27,7 +27,7 @@ declare class Schema {
    * @param  [Schema] children    defines the schemas underneath the parent schema
    * @return undefined
    */
-	constructor(name: string, identifiers: string[], action: HalCrawlerAction, children: Schema[])
+	constructor(name: string, identifiers: string[], action: HalCrawlerAction, children?: Schema[])
 
   getName(): string
 
