@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Hal Client for JavaScript",
   "main": "lib/index.js",
+  "typings": "src/hal-crawler.d.ts",
   "scripts": {
     "build": "babel src -d lib"
   },
