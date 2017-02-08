@@ -21,6 +21,6 @@ export default class Resource {
   }
 
   isFetched() {
-    return this.data === undefined;
+    return this.data !== undefined;
   }
 }
