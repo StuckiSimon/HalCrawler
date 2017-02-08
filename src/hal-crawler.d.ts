@@ -61,4 +61,19 @@ declare class Command {
   getAction(): HalCrawlerAction
 }
 
-export function crawl<T>(config: HalCrawlerConfigMap, store: Immutable.Map<string, T>, resource: Resource, command: Command):Immutable.Map<string, T>;
+/**
+ * fetches a HAL resource and returns an extended version of the store
+ * @param  config  [configuration]
+ * @param  command [defines what to execute]
+ * @param  store  [current store instance or {}]
+ * @return store with new resources
+ */
+export function crawl<T>(config: HalCrawlerConfigMap, command: Command, store: Immutable.Map<string, T>):Immutable.Map<string, T>;
+
+/**
+ * loads a given resource from the store
+ * @param  Immutable.Map store    Location of the Resource
+ * @param  Resource resource Resource without data (must contain link)
+ * @return Resource          Resource with data
+ */
+export function getResourceFromStore<T>(store: Immutable.Map<string, T>, resource: Resource): Resource
