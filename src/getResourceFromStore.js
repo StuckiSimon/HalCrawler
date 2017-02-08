@@ -1,4 +1,11 @@
-export default (store, schema, resource) => {
+/**
+ * loads a given resource from the store
+ * @param  Immutable.Map store    Location of the Resource
+ * @param  Resource resource Resource without data (must contain link)
+ * @return Resource          Resource with data
+ */
+export default (store, resource) => {
+  const schema = resource.getSchema();
   // find resources for given schema in store
   const storeLocation = store[schema.getName()];
 

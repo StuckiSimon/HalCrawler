@@ -3,7 +3,7 @@ import load from "./utils/load";
 import constants from "./constants";
 import action from "./action";
 import convertToStore from "./utils/convertToStore";
-import getResourceFromStore from "./utils/getResourceFromStore";
+import getResourceFromStore from "./getResourceFromStore";
 
 /**
  * fetches a HAL resource and returns an extended version of the store
@@ -22,7 +22,7 @@ export default function crawl(config, command, store = Immutable.Map({})) {
     return load(config.get(constants.config.root)).then(response => response.json().then(data => convertToStore(schema, data, store)));
   } else {
     if (desiredAction === action.GET) {
-      const resourceInStore = getResourceFromStore(store, schema, resource);
+      const resourceInStore = getResourceFromStore(store, resource);
       if (resourceInStore === undefined) {
         return load(resource.getLink().href).then(response => response.json().then(data => convertToStore(schema, data, store)));
       } else {
