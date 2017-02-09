@@ -19,10 +19,14 @@ const convertToStore = (schema, data, store) => {
     if (schemaInstances === undefined) {
       store = store.set(schema.getName(), Immutable.Set([resource]));
     } else {
-      const foundInstance = schemaInstances.find(instance => instance.getLink() === resource.getLink());
+      const foundInstance = schemaInstances.find(instance => instance.getLink().href === resource.getLink().href);
       if (foundInstance === undefined) {
-        const schemaInstances = store.get(schema.getName(), Immutable.Set([]));
         store = store.updateIn([schema.getName()], schemas => schemas.add(resource));
+      } else {
+        store = store.updateIn([schema.getName()], schemas => {
+          schemas = schemas.delete(foundInstance);
+          return schemas.add(resource);
+        });
       }
     }
   }
