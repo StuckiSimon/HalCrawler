@@ -6,15 +6,15 @@ export default class Schema {
   /**
    *
    * @param  string name        will be used as a unique identifier for a schema (there must never be multiple schemas with the same name)
-   * @param  [string] identifiers an array of strings which defines the attributes required to uniquely define a resource
-   * @param  Action action     the action which can be performed on an endpoint
-   * @param  [Schema] children    defines the schemas underneath the parent schema
-   * @return undefined
+   * @param  string[] identifiers an array of strings which defines the attributes required to uniquely define a resource
+   * @param  Action[] actions     the actions which can be performed on an endpoint
+   * @param  Schema[] children    defines the schemas underneath the parent schema
+   * @return instance
    */
-  constructor(name, identifiers, action, children) {
+  constructor(name, identifiers, actions, children) {
     this.name = name;
     this.identifiers = identifiers;
-    this.action = action;
+    this.actions = actions || [];
     this.children = children || [];
   }
 
@@ -26,8 +26,8 @@ export default class Schema {
     return this.identifiers;
   }
 
-  getAction() {
-    return this.action;
+  getActions() {
+    return this.actions;
   }
 
   getChildren() {
