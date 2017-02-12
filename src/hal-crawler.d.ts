@@ -19,21 +19,21 @@ export type HalCrawlerAction = 'GET' | 'POST' | 'PUT' | 'DELETE'
 export function createConfig(config: HalCrawlerConfigI): HalCrawlerConfigMap;
 
 declare class Schema {
-	/**
+  /**
    *
    * @param  string name        will be used as a unique identifier for a schema (there must never be multiple schemas with the same name)
-   * @param  [string] identifiers an array of strings which defines the attributes required to uniquely define a resource
-   * @param  Action action     the action which can be performed on an endpoint
-   * @param  [Schema] children    defines the schemas underneath the parent schema
-   * @return undefined
+   * @param  string[] identifiers an array of strings which defines the attributes required to uniquely define a resource
+   * @param  Action[] actions     the actions which can be performed on an endpoint
+   * @param  Schema[] children    defines the schemas underneath the parent schema
+   * @return instance
    */
-	constructor(name: string, identifiers: string[], action: HalCrawlerAction, children?: Schema[])
+	constructor(name: string, identifiers: string[], actions: HalCrawlerAction[], children?: Schema[])
 
   getName(): string
 
   getIdentifiers(): string[]
 
-  getAction(): HalCrawlerAction
+  getActiosn(): HalCrawlerAction[]
 
   getChildren(): Schema[]
 }
