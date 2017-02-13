@@ -54,7 +54,7 @@ declare class Resource {
 }
 
 declare class Command {
-  constructor(resource: Resource, action: HalCrawlerAction, ignoreStore: boolean)
+  constructor(resource: Resource, action: HalCrawlerAction, ignoreStore?: boolean)
 
   getResource(): Resource
 
