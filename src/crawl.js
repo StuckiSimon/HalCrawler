@@ -22,7 +22,7 @@ export default function crawl(config, command, store = Immutable.Map({})) {
     return load(config.get(constants.config.root)).then(response => response.json().then(data => convertToStore(schema, data, store)));
   } else {
     if (desiredAction === action.GET) {
-      const resourceInStore = getResourceFromStore(store, resource);
+      const resourceInStore = resource.ignoreStore() ? undefined : getResourceFromStore(store, resource);
       if (resourceInStore === undefined) {
         return load(resource.getLink().href).then(response => response.json().then(data => convertToStore(schema, data, store)));
       } else {

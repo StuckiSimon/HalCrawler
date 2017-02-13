@@ -21,6 +21,12 @@ const config = createConfig({
 });
 ```
 
+## Command
+a command defines an action which should be performed on a given resource.
+```
+new Command(adminResource, action.GET, [ignoreStore])
+```
+
 ## crawl
 crawl is the main API, it executes a given command
 ```
