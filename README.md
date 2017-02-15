@@ -26,6 +26,10 @@ A resource represents data from an endpoint. There are different kinds of resour
 - Full Resource: contains all links, data
 - Shallow Link Resource: contains only the link to itself (used by crawl and getResourceFromStore)
 - Shallow identifiers Resource: contains only the identifiers (used by getResourceFromStore)
+```
+new Resource(root, [link], [data]);
+```
+In order to get child links of a resource use the ``` getChildLink(schema) ``` helper. This returns the link or an array of links which is available on a resource
 
 ## Command
 a command defines an action which should be performed on a given resource.
@@ -42,11 +46,23 @@ new Command(new Resource(root));
 crawl is the main API, it executes a given command
 ```
 crawl(config, new Command(new Resource(root))).then(store => {
-  const adminResources = store.get(admins.getName());
-  const adminResource = adminResources.toList().get(0);
+  const rootInstance = getResourceFromStore(store, new Resource(root));
+  const adminLinks = rootInstance.getChildLink(admins);
 
-  crawl(config, new Command(adminResource, action.GET), store).then(store => {
+  crawl(config, new Command(new Resource(admins, adminLinks[0]), action.GET), store).then(store => {
     console.log(getResourceFromStore(store, new Resource(admins, undefined, {id: 2})));
   });
+
+  const orderLinks = rootInstance.getChildLink(orders);
+
+  crawl(config, new Command(new Resource(orders, orderLinks[0]), action.GET), store).then(store => {
+    console.log(getResourceFromStore(store, new Resource(orders, undefined, {id: 2})));
+  });
 });
+```
+
+## getResourceFromStore
+getResourceFromStore is responsible for retrieving a resource from the store, it accepts shallow link resources as well as shallow identifier resources.
+```
+getResourceFromStore(store, shallowResourceInstance);
 ```
