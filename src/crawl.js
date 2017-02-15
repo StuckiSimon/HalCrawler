@@ -22,11 +22,12 @@ export default function crawl(config, command, store = Immutable.Map({})) {
     return load(config.get(constants.config.root)).then(response => response.json().then(data => convertToStore(schema, data, store)));
   } else {
     if (desiredAction === action.GET) {
-      const resourceInStore = resource.ignoreStore() ? undefined : getResourceFromStore(store, resource);
+      const resourceInStore = command.ignoreStore() ? undefined : getResourceFromStore(store, resource);
       if (resourceInStore === undefined) {
         return load(resource.getLink().href).then(response => response.json().then(data => convertToStore(schema, data, store)));
       } else {
-        return Promise.resolve(resourceInStore);
+        // resource is already in store, so no update is required
+        return Promise.resolve(store);
       }
     } else {
       console.warn(action + " action is not supported yet");

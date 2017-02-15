@@ -3,12 +3,12 @@
  */
 export default class Command {
   /**
-   * if ignoreStore is true, an already stored instance will be overwritten by the result
+   * if overwriteStore is true, an already stored instance will be ignored when processing the command
    */
-  constructor(resource, action, ignoreStore = false) {
+  constructor(resource, action, overwriteStore = false) {
     this.resource = resource;
     this.action = action;
-    this.ignoreStore = ignoreStore;
+    this.overwriteStore = overwriteStore;
   }
 
   getResource() {
@@ -20,6 +20,6 @@ export default class Command {
   }
 
   ignoreStore() {
-    return this.ignoreStore;
+    return this.overwriteStore;
   }
 }

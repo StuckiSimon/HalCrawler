@@ -21,10 +21,21 @@ const config = createConfig({
 });
 ```
 
+## Resource
+A resource represents data from an endpoint. There are different kinds of resources:
+- Full Resource: contains all links, data
+- Shallow Link Resource: contains only the link to itself (used by crawl and getResourceFromStore)
+- Shallow identifiers Resource: contains only the identifiers (used by getResourceFromStore)
+
 ## Command
 a command defines an action which should be performed on a given resource.
+The resource as well as the action is mandatory
 ```
-new Command(adminResource, action.GET, [ignoreStore])
+new Command(Resource, action.GET, [ignoreStore]);
+```
+Only for the root resource action is not required
+```
+new Command(new Resource(root));
 ```
 
 ## crawl
@@ -33,6 +44,9 @@ crawl is the main API, it executes a given command
 crawl(config, new Command(new Resource(root))).then(store => {
   const adminResources = store.get(admins.getName());
   const adminResource = adminResources.toList().get(0);
-  console.log(crawl(config, new Command(adminResource, action.GET), store));
+
+  crawl(config, new Command(adminResource, action.GET), store).then(store => {
+    console.log(getResourceFromStore(store, new Resource(admins, undefined, {id: 2})));
+  });
 });
 ```
