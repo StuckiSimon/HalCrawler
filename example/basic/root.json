@@ -1,0 +1,42 @@
+{
+    "_links": {
+        "self": { "href": "/orders" },
+        "next": { "href": "/orders?page=2" },
+        "ea:find": {
+            "href": "/orders{?id}",
+            "templated": true
+        },
+        "ea:admin": [{
+            "href": "/admins.json",
+            "title": "Fred"
+        }, {
+            "href": "/admins/5",
+            "title": "Kate"
+        }]
+    },
+    "currentlyProcessing": 14,
+    "shippedToday": 20,
+    "_embedded": {
+        "ea:order": [{
+            "_links": {
+                "self": { "href": "/orders/123" },
+                "ea:basket": { "href": "/baskets/98712" },
+                "ea:customer": { "href": "/customers/7809" }
+            },
+            "id": 1,
+            "total": 30.00,
+            "currency": "USD",
+            "status": "shipped"
+        }, {
+            "_links": {
+                "self": { "href": "/orders/124" },
+                "ea:basket": { "href": "/baskets/97213" },
+                "ea:customer": { "href": "/customers/12369" }
+            },
+            "id": 2,
+            "total": 20.00,
+            "currency": "USD",
+            "status": "processing"
+        }]
+    }
+}

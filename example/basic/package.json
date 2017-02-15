@@ -1,0 +1,28 @@
+{
+  "name": "basic-hal-crawler-example",
+  "version": "1.0.0",
+  "description": "basic example of how to use hal crawler",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build": "webpack",
+    "clean": "rimraf node_modules/hal-crawler",
+    "app": "npm run clean && npm install && npm run build && npm run start"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "hal-crawler": "file:///C:\\Users\\Simon\\Documents\\HalCrawler",
+    "immutable": "^3.8.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-preset-env": "^1.1.8",
+    "babel-preset-es2015": "^6.22.0",
+    "rimraf": "^2.5.4",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.3.0"
+  }
+}

@@ -1,0 +1,7 @@
+{
+    "_links": {
+        "self": { "href": "/admins.json" }
+    },
+    "name": "El Mastero",
+    "id": 2
+}
