@@ -42,7 +42,7 @@ declare class Schema {
  * A Resource represents an instance of a Schema definition.
  */
 declare class Resource {
-  constructor(schema: Schema, link: string, data: any)
+  constructor(schema: Schema, link?: string, data?: any)
 
   getSchema(): Schema
 
