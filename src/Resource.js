@@ -28,7 +28,9 @@ export default class Resource {
     }
     const embedded = this.getData()[constants.resource.embedded];
     const embeddedResource = embedded[schema.getName()];
-    if(schema.getIdentifiers().length > 0) {
+    const schemaDefinition = this.getSchema().getChildren().find(childSchema => typeof childSchema === 'array' ? childSchema[0] === schema : childSchema === schema);
+
+    if(typeof schemaDefinition === 'array') {
       return embeddedResource.map(embedded => embedded[constants.resource.links][constants.resource.self]);
     } else {
       return embeddedResource[constants.resource.links][constants.resource.self];

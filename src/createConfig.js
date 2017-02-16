@@ -7,9 +7,9 @@ import Immutable from "immutable";
  */
 export default function createConfig(config) {
   if (config === undefined) {
-    throw "config must be an object";
-  } else if (config.root === undefined || typeof config.root !== "string") {
-    throw "config.root must be a valid url";
+    throw new Error('config must be an object');
+  } else if (config.root === undefined || typeof config.root !== 'string') {
+    throw new Error('config.root must be a valid url');
   }
   return Immutable.Map(config);
 }

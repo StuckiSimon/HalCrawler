@@ -1,11 +1,13 @@
 {
   "name": "hal-crawler",
-  "version": "0.1.0-alpha.2",
+  "version": "0.1.0-alpha.3",
   "description": "Hal Client for JavaScript",
   "main": "lib/index.js",
   "typings": "src/hal-crawler.d.ts",
   "scripts": {
-    "build": "babel src -d lib"
+    "prepublish": "npm run build",
+    "build": "babel src -d lib",
+    "test": "karma start karma.conf.js"
   },
   "repository": {
     "type": "git",
@@ -23,7 +25,17 @@
   "devDependencies": {
     "babel-cli": "^6.22.2",
     "babel-plugin-transform-runtime": "^6.22.0",
-    "babel-preset-env": "^1.1.8"
+    "babel-preset-env": "^1.1.8",
+    "babelify": "^7.3.0",
+    "browserify": "^14.1.0",
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.4.1",
+    "karma-babel-preprocessor": "^6.0.1",
+    "karma-browserify": "^5.1.1",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-jasmine-html-reporter": "^0.2.2",
+    "watchify": "^3.9.0"
   },
   "dependencies": {
     "babel-runtime": "^6.22.0",
