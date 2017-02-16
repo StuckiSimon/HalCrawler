@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "hal-crawler": "file:///C:\\Users\\Simon\\Documents\\HalCrawler",
+    "hal-crawler": "../../",
     "immutable": "^3.8.1"
   },
   "devDependencies": {
