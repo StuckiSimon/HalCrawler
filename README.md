@@ -1,5 +1,10 @@
 # HalCrawler
+
 wip
+
+## Introduction
+HAL Crawler is a client for consuming any API which is HAL (HATEOAS) compliant.
+Have a look at the spec of [HALSpec] if you're not familiar with it.
 
 ## Schemas
 Schemas define the data structure
@@ -66,3 +71,5 @@ getResourceFromStore is responsible for retrieving a resource from the store, it
 ```
 getResourceFromStore(store, shallowResourceInstance);
 ```
+
+[HALSpec]: http://stateless.co/hal_specification.html
