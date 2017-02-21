@@ -19,12 +19,12 @@ export default function crawl(config, command, store = Immutable.Map({})) {
 
   // for first call to a HAL API there is no resource instance
   if (resource.getLink() === undefined) {
-    return load(config.get(constants.config.root)).then(response => response.json().then(data => convertToStore(schema, data, store)));
+    return load(config.get(constants.config.root), config.get(constants.config.fetchOptions)).then(response => response.json().then(data => convertToStore(schema, data, store)));
   } else {
     if (desiredAction === action.GET) {
       const resourceInStore = command.ignoreStore() ? undefined : getResourceFromStore(store, resource);
       if (resourceInStore === undefined) {
-        return load(resource.getLink().href).then(response => response.json().then(data => convertToStore(schema, data, store)));
+        return load(resource.getLink().href, config.get(constants.config.fetchOptions)).then(response => response.json().then(data => convertToStore(schema, data, store)));
       } else {
         // resource is already in store, so no update is required
         return Promise.resolve(store);

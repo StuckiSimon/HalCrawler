@@ -1,5 +1,5 @@
 import "whatwg-fetch";
 
-export default (url) => {
-  return fetch(url);
+export default (url, options) => {
+  return fetch(url, options);
 };

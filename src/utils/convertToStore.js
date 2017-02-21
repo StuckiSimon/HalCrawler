@@ -5,7 +5,12 @@ const createLinkData = (link) => {
   const newData = {};
   newData[constants.resource.links] = {};
   newData[constants.resource.links][constants.resource.self] = link;
+  newData[constants.crawlerInfoObject] = {shallow: true};
   return newData;
+};
+const createEmbeddedData = (data) => {
+  data[constants.crawlerInfoObject] = {shallow: false};
+  return data;
 };
 const convertToStore = (schema, data, store) => {
   const embedded = data[constants.resource.embedded];
@@ -52,10 +57,10 @@ const convertToStore = (schema, data, store) => {
       // there is embedded data
       if (isList) {
         embeddedSchema.forEach(embedded => {
-          store = convertToStore(actualSchema, embedded, store);
+          store = convertToStore(actualSchema, createEmbeddedData(embedded), store);
         });
       } else {
-        store = convertToStore(actualSchema, embeddedSchema, store);
+        store = convertToStore(actualSchema, createEmbeddedData(embeddedSchema), store);
       }
     }
   });

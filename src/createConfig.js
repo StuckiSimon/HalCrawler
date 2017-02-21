@@ -2,7 +2,7 @@ import Immutable from "immutable";
 
 /**
  * creates and validates a configuration object
- * @param  config object which must contain root url and might contain other config such as http headers e.g.: {root: "localhost:8080/api", headers: {"Accept-Language": "en-US"}}
+ * @param  config object which must contain root url and might contain other config such as http headers e.g.: {root: "localhost:8080/api", headers: {"Accept-Language": "en-US"}, , fetchOptions: {"credentials": "include"}}
  * @return configuration instance
  */
 export default function createConfig(config) {
