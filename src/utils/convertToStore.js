@@ -39,7 +39,7 @@ const convertToStore = (schema, data, store) => {
     // true if multiple instances of a given schema can occur on this level, false if only one can exist
     const isList = Array.isArray(childSchema);
     const actualSchema = isList ? childSchema[0] : childSchema;
-    const embeddedSchema = embedded[actualSchema.getName()];
+    const embeddedSchema = embedded ? embedded[actualSchema.getName()] : undefined;
     if (embeddedSchema === undefined) {
       // there is no embedded data
       const link = links[actualSchema.getName()];
@@ -50,7 +50,7 @@ const convertToStore = (schema, data, store) => {
             store = convertToStore(actualSchema, createLinkData(linkEntry), store);
           });
         } else {
-          store = convertToStore(actualSchema, createLinkData(linkEntry), store);
+          store = convertToStore(actualSchema, createLinkData(link), store);
         }
       }
     } else {

@@ -23,7 +23,7 @@ export default function crawl(config, command, store = Immutable.Map({})) {
   } else {
     if (desiredAction === action.GET) {
       const resourceInStore = command.ignoreStore() ? undefined : getResourceFromStore(store, resource);
-      if (resourceInStore === undefined) {
+      if (resourceInStore === undefined || resource.getData()[constants.crawlerInfoObject]['shallow']) {
         return load(resource.getLink().href, config.get(constants.config.fetchOptions)).then(response => response.json().then(data => convertToStore(schema, data, store)));
       } else {
         // resource is already in store, so no update is required

@@ -1,10 +1,8 @@
 import { Resource, action, Schema } from '../src/';
 import constants from '../src/constants';
+import { authors, books } from './schemas';
 
 const authorLink = 'author1.json';
-
-const authors = new Schema('authors', ['id'], action.GET);
-const books = new Schema('books', ['id'], action.GET, [authors]);
 
 const createDummyLinkedData = () => {
   const book = {
