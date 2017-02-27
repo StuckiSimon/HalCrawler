@@ -5,5 +5,6 @@ import Schema from './Schema';
 import Resource from './Resource';
 import action from './action';
 import getResourceFromStore from './getResourceFromStore';
+import putInStoreAsPending from './putInStoreAsPending';
 
-export { crawl, getResourceFromStore, createConfig, Schema, Resource, Command, action }
+export { crawl, getResourceFromStore, putInStoreAsPending, createConfig, Schema, Resource, Command, action }

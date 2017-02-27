@@ -56,7 +56,11 @@ declare class Resource {
 
   getData(): any
 
-  isFetched(): boolean
+	isShallow(): boolean
+
+	getPromise(): Promise<any>
+
+	isPending(): boolean
 }
 
 declare class Command {
@@ -76,6 +80,8 @@ declare class Command {
  */
 export function crawl<T>(config: HalCrawlerConfigMap, command: Command, store: Immutable.Map<string, T>): Promise<T>;
 
+export function putInStoreAsPending(promise: Promise<any>, resource: Resource, store: any): any;
+
 /**
  * loads a given resource from the store
  * @param  Immutable.Map store    Location of the Resource
@@ -89,4 +95,4 @@ export function getResourceFromStore<T>(store: Immutable.Map<string, T>, resourc
  * @param  config object which must contain root url and might contain other config such as http headers e.g.: {root: "localhost:8080/api", headers: {"Accept-Language": "en-US"}}
  * @return configuration instance
  */
-export function createConfig(config: { root: string }): Immutable.Map<string, any> 
+export function createConfig(config: { root: string }): Immutable.Map<string, any>
