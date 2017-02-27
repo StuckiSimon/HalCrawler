@@ -5,7 +5,8 @@ import { createHalux, haluxReducer, createHaluxAction, nestHaluxActions } from '
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 
 const client = new Schema("client", ["id"], [action.GET]);
-const clients = new Schema("clients", [], [action.GET], [[client]]);
+const mostImportantClient = new Schema("mostImportantClient", ["id"], [action.GET]);
+const clients = new Schema("clients", [], [action.GET], [[client], mostImportantClient]);
 const languages = new Schema("languages", [], [action.GET]);
 
 // [] => list of resources, if only one can occur the [] can be removed

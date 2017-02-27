@@ -3,6 +3,9 @@
     "self": { "href": "clients.json" }
   },
   "_embedded": {
+    "mostImportantClient": {
+      "id": 3
+    },
     "client": [
       {
         "_links": {
