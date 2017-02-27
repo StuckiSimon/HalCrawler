@@ -1,0 +1,7 @@
+{
+	"_links": {
+    "self": { "href": "rootClientModel.json" },
+    "clients": { "href": "clients.json" },
+		"languages": { "href": "languages.json" }
+  }
+}

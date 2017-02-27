@@ -1,0 +1,6 @@
+{
+  "_links": {
+    "self": { "href": "languages.json" }
+  },
+  "languages": ["de", "fr", "en", "es"]
+}
