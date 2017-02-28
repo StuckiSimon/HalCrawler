@@ -6,23 +6,33 @@ wip
 HAL Crawler is a client for consuming any API which is HAL (HATEOAS) compliant.
 Have a look at the spec of [HALSpec] if you're not familiar with it.
 
+This library should be used in combination with a wrapper. For Redux there is an implementation [halux].
+
+Also have a look at the examples which provide pretty good information about the features of the HalCrawler as well as a sample integration with [halux].
+
 ## Schemas
 Schemas define the data structure
-
 ```
+new Schema(identifier: string, identifiers: string[], actionsWhichCanBePerformedOnInstance: action[], children: Schema[])
+
 import { createConfig, crawl, Command, Schema, Resource, action } from "hal-crawler";
 const admins = new Schema("ea:admin", ["id"], [action.GET]);
 const orders = new Schema("ea:order", ["id"], [action.GET]);
 
 // [] => list of resources, if only one can occur the [] can be removed
 const root = new Schema("root", [], [action.GET], [[admins], [orders]]);
+// e.g.:
+const clients = new Schema("clients", [], [action.GET], [[client], mostImportantClient]);
 ```
 
 ## configuration
-the crawler needs some basic information, this must be passed using configuration objects, only the root resource is mandatory, but others such as "http-headers" are also possible
+the crawler needs some basic information, this must be passed using configuration objects, only the root resource is mandatory, but others such as "http-headers" or fetchOptions are also possible.
 ```
 const config = createConfig({
-  root: "root.json"
+  root: "root.json",
+  fetchOptions: {
+    // these options will be passed directly to whatwg-fetch()
+  }
 });
 ```
 
@@ -35,6 +45,8 @@ A resource represents data from an endpoint. There are different kinds of resour
 new Resource(root, [link], [data]);
 ```
 In order to get child links of a resource use the ``` getChildLink(schema) ``` helper. This returns the link or an array of links which is available on a resource
+
+In order to get child data of a resource use the ``` getChildData(schema) ``` helper. This returns the data or an array of data which is available on a resource
 
 ## Command
 a command defines an action which should be performed on a given resource.
@@ -73,3 +85,4 @@ getResourceFromStore(store, shallowResourceInstance);
 ```
 
 [HALSpec]: http://stateless.co/hal_specification.html
+[halux]: https://github.com/sir-marc/halux
