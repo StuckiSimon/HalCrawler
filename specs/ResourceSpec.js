@@ -4,6 +4,17 @@ import { authors, books } from './schemas';
 
 const authorLink = 'author1.json';
 
+const authorsData = {
+
+}
+
+authorsData[constants.resource.links] = {
+
+};
+authorsData[constants.resource.links][constants.resource.self] = {
+  href: authorLink
+};
+
 const createDummyLinkedData = () => {
   const book = {
   };
@@ -19,16 +30,9 @@ const createDummyEmbeddedData = () => {
   const book = {
   };
   const embedded = book[constants.resource.embedded] = {
-    authors: {
+    authors: authorsData
+  };
 
-    }
-  };
-  embedded.authors[constants.resource.links] = {
-
-  };
-  embedded.authors[constants.resource.links][constants.resource.self] = {
-    href: authorLink
-  };
   return book;
 };
 
@@ -45,6 +49,11 @@ describe('Resource', function() {
   it('should find links which are embedded', function() {
     const resource = createDummyEmbeddedResource();
     expect(resource.getChildLink(authors).href).toEqual(authorLink);
+  });
+
+  it('should find data which is embedded', function() {
+    const resource = createDummyEmbeddedResource();
+    expect(resource.getChildData(authors)).toEqual(authorsData);
   });
 
 });

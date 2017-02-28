@@ -18,6 +18,31 @@ export default class Resource {
     return this.link;
   }
 
+  _getEmbeddedResource(schema) {
+    const embedded = this.getData()[constants.resource.embedded];
+    if(embedded !== undefined) {
+      const embeddedResource = embedded[schema.getName()];
+      return embeddedResource;
+    }
+  }
+
+  _processEmbeddedSchema(schema, processor) {
+    const embeddedResource = this._getEmbeddedResource(schema);
+    if(embeddedResource !== undefined) {
+      const schemaDefinition = this.getSchema().getChildren().find(childSchema => Array.isArray(childSchema) ? childSchema[0] === schema : childSchema === schema);
+
+      if(Array.isArray(schemaDefinition)) {
+        return embeddedResource.map(processor);
+      } else {
+        return processor(embeddedResource);
+      }
+    }
+  }
+
+  getChildData(schema) {
+    return this._processEmbeddedSchema(schema, embeddedResource => embeddedResource);
+  }
+
   getChildLink(schema) {
     const links = this.getData()[constants.resource.links];
     if(links !== undefined) {
@@ -26,15 +51,8 @@ export default class Resource {
         return linkInstance;
       }
     }
-    const embedded = this.getData()[constants.resource.embedded];
-    const embeddedResource = embedded[schema.getName()];
-    const schemaDefinition = this.getSchema().getChildren().find(childSchema => Array.isArray(childSchema) ? childSchema[0] === schema : childSchema === schema);
 
-    if(Array.isArray(schemaDefinition)) {
-      return embeddedResource.map(embedded => embedded[constants.resource.links][constants.resource.self]);
-    } else {
-      return embeddedResource[constants.resource.links][constants.resource.self];
-    }
+    return this._processEmbeddedSchema(schema, embeddedResource => embeddedResource[constants.resource.links][constants.resource.self]);
   }
 
   getData() {

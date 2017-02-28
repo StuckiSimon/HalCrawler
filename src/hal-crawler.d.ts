@@ -61,6 +61,10 @@ declare class Resource {
 	getPromise(): Promise<any>
 
 	isPending(): boolean
+
+	getChildLink(schema: Schema): any
+
+	getChildData(schema: Schema): any
 }
 
 declare class Command {
