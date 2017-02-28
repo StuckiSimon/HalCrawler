@@ -13,6 +13,16 @@
             "href": "clients.1.json"
           }
         },
+        "_embedded": {
+          "pet": {
+            "_links": {
+              "self": {
+                "href": "pet.json"
+              }
+            },
+            "name": "Husky"
+          }
+        },
         "id": 1
       },
       {
