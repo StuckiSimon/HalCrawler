@@ -37,11 +37,13 @@ declare class Schema {
 
   getName(): string
 
-  getIdentifiers(): string[]
+  getIdentifiers(): any
 
   getAction(): HalCrawlerAction
 
   getChildren(): Schema[]
+
+	isMultiInstanceSchema(): boolean
 }
 
 /**

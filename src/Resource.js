@@ -79,15 +79,25 @@ export default class Resource {
     return data[constants.crawlerInfoObject]['resourceRequestCount'] > resource.getData()[constants.crawlerInfoObject]['resourceRequestCount'];
   }
 
-  // the state might be different
+  // checks if two given resources of the same schema model the same data, doesn't check if schemas are matching
   isModellingSameResourceAs(resource) {
-    const ownData = this.getData();
-    const foreignData = resource.getData();
-    if(this.getLink() === resource.getLink()) {
+
+    const schema = this.getSchema();
+    if(!schema.isMultiInstanceSchema()) {
       return true;
     }
-    const identifiers = this.getSchema().getIdentifiers();
-    const unequalIdentifierInstance = identifiers.find(identifier => ownData[identifier] !== foreignData[identifier]);
+
+    const ownData = this.getData();
+    const foreignData = resource.getData();
+
+    const ownLink = this.getLink();
+    const foreignLink = resource.getLink();
+    if(foreignLink !== undefined && ownLink !== undefined) {
+      return foreignLink === ownLink || foreignLink.href === ownLink.href;
+    }
+
+    const identifiers = schema.getIdentifiers();
+    const unequalIdentifierInstance = identifiers.find(identifier => ownData[identifier] !== foreignData[identifier] && ownData[identifier] !== undefined);
     return unequalIdentifierInstance === undefined;
   }
 }

@@ -24,7 +24,7 @@ const convertToStore = (schema, data, store) => {
   }
   data[constants.crawlerInfoObject]['resourceRequestCount'] = resourceRequestCount;
   const resource = new Resource(schema, links === undefined ? undefined : links[constants.resource.self], data);
-  if (schema.getIdentifiers().length === 0) {
+  if (!schema.isMultiInstanceSchema()) {
     // there is only one instance for given resource
     store = store.set(schema.getName(), resource);
   } else {

@@ -14,33 +14,14 @@ export default (store, resource) => {
     return undefined;
   }
   // the element could be here
-  if (schema.getIdentifiers().length === 0) {
+  if (!schema.isMultiInstanceSchema()) {
     // there is only one instance for given resource (e.g. root)
     return storeLocation;
   } else {
     const link = resource.getLink();
     let findCallback = currentResource => {
-      const linksMatch = currentResource.getLink() === resource.getLink();
-      const data = currentResource.getData();
-      const notDefinedIdentifier = schema.getIdentifiers().find(identifier => data[identifier] === undefined);
-      return linksMatch && notDefinedIdentifier === undefined;
+      return resource.isModellingSameResourceAs(currentResource);
     };
-    if(link === undefined) {
-      const identifiers = schema.getIdentifiers();
-      const data = resource.getData();
-      findCallback = currentResource => {
-        const currentData = currentResource.getData();
-        // find where it doesn't match
-        const different = identifiers.find(identifier => {
-          return currentData[identifier] !== data[identifier] && data[identifier] !== undefined;
-        });
-        if(different === undefined) {
-          return true;
-        } else {
-          return false;
-        }
-      };
-    }
     // there can be multiple instances for given resource
     const foundResource = storeLocation.find(findCallback);
     if (foundResource === undefined) {

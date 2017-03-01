@@ -1,5 +1,5 @@
 import Immutable from "immutable";
-import { createConfig, crawl, Command, Schema, Resource, action, getResourceFromStore } from "hal-crawler";
+import { createConfig, crawl, Command, Schema, Resource, action, getResourceFromStore, schemaType } from "hal-crawler";
 
 import { createHalux, haluxReducer, createHaluxAction, nestHaluxActions } from 'halux';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
@@ -7,8 +7,8 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 const pet = new Schema("pet", ["id"], [action.GET]);
 const client = new Schema("client", ["id"], [action.GET], [pet]);
 const mostImportantClient = new Schema("mostImportantClient", ["id"], [action.GET]);
-const clients = new Schema("clients", [], [action.GET], [[client], mostImportantClient]);
-const languages = new Schema("languages", [], [action.GET]);
+const clients = new Schema("clients", schemaType.singleInstanceResource, [action.GET], [[client], mostImportantClient]);
+const languages = new Schema("languages", schemaType.singleInstanceResource, [action.GET]);
 
 // [] => list of resources, if only one can occur the [] can be removed
 const root = new Schema("root", [], [action.GET], [clients, languages]);
