@@ -1,0 +1,6 @@
+{
+  "_links": {
+    "self": { "href": "food1.json" }
+  },
+  "name": "Cheese"
+}

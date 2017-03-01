@@ -4,7 +4,8 @@ import { createConfig, crawl, Command, Schema, Resource, action, getResourceFrom
 import { createHalux, haluxReducer, createHaluxAction, nestHaluxActions } from 'halux';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 
-const pet = new Schema("pet", ["id"], [action.GET]);
+const foods = new Schema("foods", schemaType.linkIdentifiedResource);
+const pet = new Schema("pet", ["id"], [action.GET], [[foods]]);
 const client = new Schema("client", ["id"], [action.GET], [pet]);
 const mostImportantClient = new Schema("mostImportantClient", ["id"], [action.GET]);
 const clients = new Schema("clients", schemaType.singleInstanceResource, [action.GET], [[client], mostImportantClient]);
@@ -45,6 +46,12 @@ const fetchPet = () => createHaluxAction({
     identifiers: undefined
 });
 
+// fetches all foods
+const fetchFoods = () => createHaluxAction({
+    schema: foods,
+    identifiers: undefined
+});
+
 const fetchLanguages = () => createHaluxAction({
     schema: languages,
     identifiers: undefined
@@ -53,6 +60,7 @@ const fetchLanguages = () => createHaluxAction({
 const nestedClients = () => nestHaluxActions(fetchRoot, fetchClients)({}, {});
 const nestedClient = (client) => nestHaluxActions(nestedClients, fetchClient)({}, client);
 const nestedPet = (client) => nestHaluxActions(nestedClient, fetchPet)(client, {});
+const nestedFoods = (client) => nestHaluxActions(nestedPet, fetchFoods)(client, {});
 const nestedLanguages = () => nestHaluxActions(fetchRoot, fetchLanguages)({}, {});
 
 const trialReducer = (state = {}, action) => {
@@ -78,6 +86,7 @@ const store = createStore(
 store.dispatch(nestedClient({id: 2}));
 store.dispatch(nestedPet({id: 2}));
 store.dispatch(nestedPet({id: 1}));
+store.dispatch(nestedFoods({id: 1}));
 store.dispatch(fetchRoot());
 store.dispatch(nestedLanguages());
 setTimeout(() => {

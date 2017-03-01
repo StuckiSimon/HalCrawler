@@ -18,7 +18,11 @@
             "_links": {
               "self": {
                 "href": "pet.json"
-              }
+              },
+              "foods": [
+                {"href": "food1.json"},
+                {"href": "food2.json"}
+              ]
             },
             "name": "Husky"
           }
