@@ -4,7 +4,9 @@
   },
   "_embedded": {
     "mostImportantClient": {
-      "id": 3
+      "nested": {
+        "id": 3
+      }
     },
     "client": [
       {

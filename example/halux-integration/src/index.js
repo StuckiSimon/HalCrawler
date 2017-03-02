@@ -7,7 +7,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 const foods = new Schema("foods", schemaType.linkIdentifiedResource);
 const pet = new Schema("pet", ["id"], [action.GET], [[foods]]);
 const client = new Schema("client", ["id"], [action.GET], [pet]);
-const mostImportantClient = new Schema("mostImportantClient", ["id"], [action.GET]);
+const mostImportantClient = new Schema("mostImportantClient", ["nested.id"], [action.GET]);
 const clients = new Schema("clients", schemaType.singleInstanceResource, [action.GET], [[client], mostImportantClient]);
 const languages = new Schema("languages", schemaType.singleInstanceResource, [action.GET]);
 
