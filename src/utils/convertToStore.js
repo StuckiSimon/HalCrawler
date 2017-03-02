@@ -32,15 +32,8 @@ const convertToStore = (schema, data, store) => {
     if (schemaInstances === undefined) {
       store = store.set(schema.getName(), Immutable.Set([resource]));
     } else {
-      const identifierBasedSearch = (instance) => {
-        const unmatching = schema.getIdentifiers().find(identifier => instance.getData()[identifier] === resource.getData()[identifier]);
-        return unmatching !== undefined;
-      };
       const foundInstance = schemaInstances.find(instance => {
-        if(resource.getLink() === undefined || instance.getLink() === undefined) {
-          return identifierBasedSearch(instance);
-        }
-        return instance.getLink().href === resource.getLink().href
+        return resource.isModellingSameResourceAs(instance);
       });
       if (foundInstance === undefined) {
         store = store.updateIn([schema.getName()], schemas => schemas.add(resource));
