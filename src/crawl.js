@@ -5,6 +5,8 @@ import action from "./action";
 import convertToStore from "./utils/convertToStore";
 import getResourceFromStore from "./getResourceFromStore";
 
+const performCrawl = (link, config, schema, store) => load(link, config.get(constants.config.fetchOptions)).then(data => convertToStore(schema, data, store));
+
 /**
  * fetches a HAL resource and returns an extended version of the store
  * @param  config  [configuration]
@@ -19,10 +21,10 @@ export default function crawl(config, command, store = Immutable.Map({})) {
 
   // for first call to a HAL API there is no resource instance
   if (resource.getLink() === undefined) {
-    return load(config.get(constants.config.root), config.get(constants.config.fetchOptions)).then(response => response.json().then(data => convertToStore(schema, data, store)));
+    return performCrawl(config.get(constants.config.root), config, schema, store);
   } else {
     if (desiredAction === action.GET) {
-      return load(resource.getLink().href, config.get(constants.config.fetchOptions)).then(response => response.json().then(data => convertToStore(schema, data, store)));
+      return performCrawl(resource.getLink().href, config, schema, store);
     } else {
       console.warn(action + " action is not supported yet");
     }
