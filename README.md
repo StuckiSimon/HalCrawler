@@ -13,11 +13,11 @@ Also have a look at the examples which provide pretty good information about the
 ## Schemas
 Schemas define the data structure
 ```
-new Schema(identifier: string, identifiers: string[], actionsWhichCanBePerformedOnInstance: action[], children: Schema[])
+new Schema(identifier: string, identifiers: string[] or schemaType, actionsWhichCanBePerformedOnInstance: action[], children: Schema[])
 
 import { createConfig, crawl, Command, Schema, Resource, action } from "hal-crawler";
 const admins = new Schema("ea:admin", ["id"], [action.GET]);
-const orders = new Schema("ea:order", ["id"], [action.GET]);
+const orders = new Schema("ea:order", ["nested.id"], [action.GET]);
 
 // [] => list of resources, if only one can occur the [] can be removed
 const root = new Schema("root", [], [action.GET], [[admins], [orders]]);
@@ -25,8 +25,15 @@ const root = new Schema("root", [], [action.GET], [[admins], [orders]]);
 const clients = new Schema("clients", [], [action.GET], [[client], mostImportantClient]);
 ```
 
+Note that instead of identifiers you can also define special schemaTypes using the schemaType:
+```const foods = new Schema("foods", schemaType.linkIdentifiedResource);```
+There are two schemaTypes:
+linkIdentifiedResource -> this resource can only be identified using the self link
+singleInstanceResource -> there is only one instance of this resource
+
 ## configuration
-the crawler needs some basic information, this must be passed using configuration objects, only the root resource is mandatory, but others such as "http-headers" or fetchOptions are also possible.
+the crawler needs some basic information, this must be passed using configuration objects, only the root resource is mandatory, fetchOptions are also possible.
+Consult [whatwg-fetch] to see what options can be passed to fetch().
 ```
 const config = createConfig({
   root: "root.json",
@@ -44,15 +51,15 @@ A resource represents data from an endpoint. There are different kinds of resour
 ```
 new Resource(root, [link], [data]);
 ```
-In order to get child links of a resource use the ``` getChildLink(schema) ``` helper. This returns the link or an array of links which is available on a resource
+In order to get child links of a resource use the ``` getChildLink(schema) ``` helper. This returns the link or an array of links which is available on a resource.
 
-In order to get child data of a resource use the ``` getChildData(schema) ``` helper. This returns the data or an array of data which is available on a resource
+In order to get child data of a resource use the ``` getChildData(schema) ``` helper. This returns the data or an array of data which is available on a resource.
 
 ## Command
 a command defines an action which should be performed on a given resource.
 The resource as well as the action is mandatory
 ```
-new Command(Resource, action.GET, [ignoreStore]);
+new Command(Resource, action.GET);
 ```
 Only for the root resource action is not required
 ```
@@ -86,3 +93,4 @@ getResourceFromStore(store, shallowResourceInstance);
 
 [HALSpec]: http://stateless.co/hal_specification.html
 [halux]: https://github.com/sir-marc/halux
+[whatwg-fetch]: https://github.com/github/fetch
