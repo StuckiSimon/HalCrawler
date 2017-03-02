@@ -43,6 +43,8 @@ declare class Schema {
 
   getChildren(): Schema[]
 
+	addChild(newChild: Schema): void
+
 	isMultiInstanceSchema(): boolean
 }
 

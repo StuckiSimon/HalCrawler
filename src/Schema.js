@@ -40,6 +40,10 @@ export default class Schema {
     return this.children;
   }
 
+  addChild(newChild) {
+    this.children.push(newChild);
+  }
+
   isMultiInstanceSchema() {
     return this.getIdentifiers() !== schemaType.singleInstanceResource;
   }
