@@ -1,4 +1,5 @@
 import constants from "./constants";
+import get from "lodash/get";
 
 /**
  * A Resource represents an instance of a Schema definition.
@@ -79,6 +80,11 @@ export default class Resource {
     return data[constants.crawlerInfoObject]['resourceRequestCount'] > resource.getData()[constants.crawlerInfoObject]['resourceRequestCount'];
   }
 
+  _isUnequal(identifier, ownData, foreignData) {
+    const ownDataAtIdentifier = get(ownData, identifier);
+    return ownDataAtIdentifier !== get(foreignData, identifier) || ownDataAtIdentifier === undefined;
+  }
+
   // checks if two given resources of the same schema model the same data, doesn't check if schemas are matching
   isModellingSameResourceAs(resource) {
 
@@ -97,7 +103,7 @@ export default class Resource {
     }
 
     const identifiers = schema.getIdentifiers();
-    const unequalIdentifierInstance = identifiers.find(identifier => ownData[identifier] !== foreignData[identifier] && ownData[identifier] !== undefined);
+    const unequalIdentifierInstance = identifiers.find(identifier => this._isUnequal(identifier, ownData, foreignData));
     return unequalIdentifierInstance === undefined;
   }
 }
