@@ -20,13 +20,18 @@ const config = createConfig({
 
 const fetchRoot = () => createHaluxAction({
     schema: root,
-    identifiers: undefined
+    identifiers: undefined,
+    handlers: {
+        pendingHandler: () => console.log('pending'),
+        errorHandler: (error) => console.log(error.toString())
+    }
 });
 
 const fetchClients = () => createHaluxAction({
     schema: clients,
     identifiers: undefined,
     handlers: {
+        successHandler: (state) => console.log('fetchedClients'),
         errorHandler: (error) => console.log(error.toString())
     }
 });
@@ -43,7 +48,10 @@ const fetchClient = (clientObject) => createHaluxAction({
 
 const fetchPet = () => createHaluxAction({
     schema: pet,
-    identifiers: undefined
+    identifiers: undefined,
+    handlers: {
+        errorHandler: (error) => console.log(error.toString())
+    }
 });
 
 // fetches all foods
@@ -54,7 +62,10 @@ const fetchFoods = () => createHaluxAction({
 
 const fetchLanguages = () => createHaluxAction({
     schema: languages,
-    identifiers: undefined
+    identifiers: undefined,
+    handlers: {
+        errorHandler: (error) => console.log(error.toString())
+    }
 });
 
 const nestedClients = () => nestHaluxActions(fetchRoot, fetchClients)({}, {});
