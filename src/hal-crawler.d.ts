@@ -72,11 +72,15 @@ declare class Resource {
 }
 
 declare class Command {
-  constructor(resource: Resource, action?: HalCrawlerAction)
+  constructor(resource: Resource, action?: HalCrawlerAction, destinationSchema?: Schema, body?: any)
 
   getResource(): Resource
 
   getAction(): HalCrawlerAction
+
+	getDestinationSchema(): Schema
+
+	getBody(): any
 }
 
 /**

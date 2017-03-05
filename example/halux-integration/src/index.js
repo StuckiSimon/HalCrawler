@@ -4,8 +4,9 @@ import { createConfig, crawl, Command, Schema, Resource, action, getResourceFrom
 import { createHalux, haluxReducer, createHaluxAction, nestHaluxActions } from 'halux';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 
+const postFoods = new Schema("save-foods", schemaType.linkIdentifiedResource);
 const foods = new Schema("foods", schemaType.linkIdentifiedResource);
-const pet = new Schema("pet", ["id"], [action.GET], [[foods]]);
+const pet = new Schema("pet", ["id"], [action.GET], [[foods], [postFoods]]);
 const client = new Schema("client", ["id"], [action.GET], [pet]);
 const mostImportantClient = new Schema("mostImportantClient", ["nested.id"], [action.GET]);
 const clients = new Schema("clients", schemaType.singleInstanceResource, [action.GET], [[client], mostImportantClient]);
@@ -23,7 +24,7 @@ const fetchRoot = () => createHaluxAction({
     identifiers: undefined,
     handlers: {
         pendingHandler: () => console.log('pending'),
-        errorHandler: (error) => console.log(error.toString())
+        errorHandler: (store, error) => console.log(error.toString())
     }
 });
 
@@ -31,8 +32,8 @@ const fetchClients = () => createHaluxAction({
     schema: clients,
     identifiers: undefined,
     handlers: {
-        successHandler: (state) => console.log('fetchedClients'),
-        errorHandler: (error) => console.log(error.toString())
+        successHandler: (store, state) => console.log('fetchedClients'),
+        errorHandler: (store, error) => console.log(error.toString())
     }
 });
 
@@ -42,7 +43,7 @@ const fetchClient = (clientObject) => createHaluxAction({
       id: clientObject.id
     },
     handlers: {
-        errorHandler: (error) => console.log(error.toString())
+        errorHandler: (store, error) => console.log(error.toString())
     }
 });
 
@@ -50,7 +51,7 @@ const fetchPet = () => createHaluxAction({
     schema: pet,
     identifiers: undefined,
     handlers: {
-        errorHandler: (error) => console.log(error.toString())
+        errorHandler: (store, error) => console.log(error.toString())
     }
 });
 
@@ -60,11 +61,17 @@ const fetchFoods = () => createHaluxAction({
     identifiers: undefined
 });
 
+const postToFoods = () => createHaluxAction({
+  schema: postFoods,
+  into: foods,
+  overwriteStore: true
+});
+
 const fetchLanguages = () => createHaluxAction({
     schema: languages,
     identifiers: undefined,
     handlers: {
-        errorHandler: (error) => console.log(error.toString())
+        errorHandler: (store, error) => console.log(error.toString())
     }
 });
 

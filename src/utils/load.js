@@ -1,4 +1,5 @@
 import "whatwg-fetch";
+import action from '../action';
 
 const handleJson = (response) => {
   return response.json().catch(fatalError => {
@@ -13,6 +14,6 @@ const handleJson = (response) => {
   })
 };
 
-export default (url, options) => {
-  return fetch(url, options).then(handleJson);
+export default (url, options, method, body) => {
+  return fetch(url, method === action.POST ? { ...options, method: 'POST', body } : options ).then(handleJson);
 };
