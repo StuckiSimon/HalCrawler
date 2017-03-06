@@ -48,4 +48,8 @@ export default class Schema {
     return this.getIdentifiers() !== schemaType.singleInstanceResource;
   }
 
+  isLinkIdentifiedSchema() {
+    return this.getIdentifiers() === schemaType.linkIdentifiedResource;
+  }
+
 }

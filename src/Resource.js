@@ -100,6 +100,9 @@ export default class Resource {
     const foreignLink = resource.getLink();
     if(foreignLink !== undefined && ownLink !== undefined) {
       return foreignLink === ownLink || foreignLink.href === ownLink.href;
+    } else if (schema.isLinkIdentifiedSchema()) {
+      // if it's identified by the link, but the links aren't present the comparison failed
+      return false;
     }
 
     const identifiers = schema.getIdentifiers();
