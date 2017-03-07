@@ -26,7 +26,7 @@ export default function crawl(config, command, store = Immutable.Map({})) {
       case action.GET:
       case action.POST:
         return performCrawl(resource.getLink().href, config, command.getDestinationSchema(), store, desiredAction, command.getBody());
-      default: console.warn(desiredAction + " action is not supported yet");
+      default: console.warn(desiredAction + " action is not supported");
     }
   }
 }

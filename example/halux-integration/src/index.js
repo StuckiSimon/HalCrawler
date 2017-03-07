@@ -16,7 +16,12 @@ const languages = new Schema("languages", schemaType.singleInstanceResource, [ac
 const root = new Schema("root", [], [action.GET], [clients, languages]);
 
 const config = createConfig({
-  root: "rootClientModel.json"
+  root: "rootClientModel.json",
+  fetchOptions: {
+    headers: {
+      'Accept-Language': 'en'
+    }
+  }
 });
 
 const fetchRoot = () => createHaluxAction({
