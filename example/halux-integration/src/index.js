@@ -52,6 +52,18 @@ const fetchClient = (clientObject) => createHaluxAction({
     }
 });
 
+const fetchClientAndOverwrite = (clientObject) => createHaluxAction({
+    schema: client,
+    overwriteStore: true,
+    identifiers: {
+      id: clientObject.id
+    },
+    handlers: {
+        errorHandler: (store, error) => console.log(error.toString())
+    }
+});
+
+
 const fetchPet = () => createHaluxAction({
     schema: pet,
     identifiers: undefined,
@@ -82,6 +94,7 @@ const fetchLanguages = () => createHaluxAction({
 
 const nestedClients = () => nestHaluxActions(fetchRoot, fetchClients)({}, {});
 const nestedClient = (client) => nestHaluxActions(nestedClients, fetchClient)({}, client);
+const nestedClientAndOverwrite = (client) => nestHaluxActions(nestedClients, fetchClientAndOverwrite)({}, client);
 const nestedPet = (client) => nestHaluxActions(nestedClient, fetchPet)(client, {});
 const nestedFoods = (client) => nestHaluxActions(nestedPet, fetchFoods)(client, {});
 const nestedLanguages = () => nestHaluxActions(fetchRoot, fetchLanguages)({}, {});
@@ -114,6 +127,7 @@ store.dispatch(fetchRoot());
 store.dispatch(nestedLanguages());
 setTimeout(() => {
   store.dispatch(fetchRoot());
+  store.dispatch(nestedClientAndOverwrite({id: 2}));
 }, 500);
 
 setTimeout(() => {

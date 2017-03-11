@@ -38,7 +38,7 @@ const convertToStore = (schema, data, store) => {
       if (foundInstance === undefined) {
         store = store.updateIn([schema.getName()], schemas => schemas.add(resource));
       } else {
-        if(foundInstance.getData()[constants.crawlerInfoObject].shallow) {
+        if(resource.isNewerAs(foundInstance)) {
           store = store.updateIn([schema.getName()], schemas => {
             schemas = schemas.delete(foundInstance);
             return schemas.add(resource);
