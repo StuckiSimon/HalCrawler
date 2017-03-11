@@ -1,5 +1,5 @@
 
 export default {
-  linkIdentifiedResource: Symbol('linkIdentifiedResource'),
-  singleInstanceResource: Symbol('singleInstanceResource')
-}
+    linkIdentifiedResource: Symbol('linkIdentifiedResource'),
+    singleInstanceResource: Symbol('singleInstanceResource')
+};

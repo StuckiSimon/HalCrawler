@@ -1,4 +1,4 @@
-import Immutable from "immutable";
+import Immutable from 'immutable';
 
 /**
  * creates and validates a configuration object
@@ -6,10 +6,10 @@ import Immutable from "immutable";
  * @return configuration instance
  */
 export default function createConfig(config) {
-  if (config === undefined) {
-    throw new Error('config must be an object');
-  } else if (config.root === undefined || typeof config.root !== 'string') {
-    throw new Error('config.root must be a valid url');
-  }
-  return Immutable.Map(config);
+    if (config === undefined) {
+        throw new Error('config must be an object');
+    } else if (config.root === undefined || typeof config.root !== 'string') {
+        throw new Error('config.root must be a valid url');
+    }
+    return Immutable.Map(config);
 }

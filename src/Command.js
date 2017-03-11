@@ -2,26 +2,26 @@
  * A Command represents an action on an instance or the root resource
  */
 export default class Command {
-  constructor(resource, action, destinationSchema, body) {
-    this.resource = resource;
-    this.action = action;
-    this.destinationSchema = destinationSchema;
-    this.body = body;
-  }
+    constructor(resource, action, destinationSchema, body) {
+        this.resource = resource;
+        this.action = action;
+        this.destinationSchema = destinationSchema;
+        this.body = body;
+    }
 
-  getResource() {
-    return this.resource;
-  }
+    getResource() {
+        return this.resource;
+    }
 
-  getAction() {
-    return this.action;
-  }
+    getAction() {
+        return this.action;
+    }
 
-  getDestinationSchema() {
-    return this.destinationSchema === undefined ? this.getResource().getSchema() : this.destinationSchema;
-  }
+    getDestinationSchema() {
+        return this.destinationSchema === undefined ? this.getResource().getSchema() : this.destinationSchema;
+    }
 
-  getBody() {
-    return this.body;
-  }
+    getBody() {
+        return this.body;
+    }
 }

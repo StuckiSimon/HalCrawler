@@ -17,39 +17,39 @@ export default class Schema {
    * @param  Schema[] children    defines the schemas underneath the parent schema, is optional
    * @return Schema definition instance
    */
-  constructor(name, identifiers, actions, children) {
-    this.name = name;
-    this.identifiers = identifiers || linkIdentifiedResource;
-    this.actions = actions || [action.GET];
-    this.children = children || [];
-  }
+    constructor(name, identifiers, actions, children) {
+        this.name = name;
+        this.identifiers = identifiers || schemaType.linkIdentifiedResource;
+        this.actions = actions || [action.GET];
+        this.children = children || [];
+    }
 
-  getName() {
-    return this.name;
-  }
+    getName() {
+        return this.name;
+    }
 
-  getIdentifiers() {
-    return this.identifiers;
-  }
+    getIdentifiers() {
+        return this.identifiers;
+    }
 
-  getActions() {
-    return this.actions;
-  }
+    getActions() {
+        return this.actions;
+    }
 
-  getChildren() {
-    return this.children;
-  }
+    getChildren() {
+        return this.children;
+    }
 
-  addChild(newChild) {
-    this.children.push(newChild);
-  }
+    addChild(newChild) {
+        this.children.push(newChild);
+    }
 
-  isMultiInstanceSchema() {
-    return this.getIdentifiers() !== schemaType.singleInstanceResource;
-  }
+    isMultiInstanceSchema() {
+        return this.getIdentifiers() !== schemaType.singleInstanceResource;
+    }
 
-  isLinkIdentifiedSchema() {
-    return this.getIdentifiers() === schemaType.linkIdentifiedResource;
-  }
+    isLinkIdentifiedSchema() {
+        return this.getIdentifiers() === schemaType.linkIdentifiedResource;
+    }
 
 }
