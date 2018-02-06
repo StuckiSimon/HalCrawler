@@ -1,7 +1,5 @@
 # HalCrawler
 
-wip
-
 ## Introduction
 HAL Crawler is a client for consuming any API which is HAL (HATEOAS) compliant.
 Have a look at the spec of [HALSpec] if you're not familiar with it.
